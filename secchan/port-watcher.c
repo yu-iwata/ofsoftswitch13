@@ -236,18 +236,18 @@ update_netdev_monitor_devices(struct port_watcher *pw)
 static bool
 port_watcher_local_packet_cb(struct relay *r, void *pw_)
 {
-    /*struct port_watcher *pw = pw_;
+    struct port_watcher *pw = pw_;
     struct ofpbuf *msg = r->halves[HALF_LOCAL].rxbuf;
     struct ofp_header *oh = msg->data;
 
     if (oh->type == OFPT_FEATURES_REPLY
-        && msg->size >= offsetof(struct ofp_switch_features, ports)) {
+        ) {
         struct ofp_switch_features *osf = msg->data;
-        bool seen[PORT_ARRAY_SIZE];
-        struct ofp_port *p;
-        unsigned int port_no;
-        size_t n_ports;
-        size_t i;
+        //bool seen[PORT_ARRAY_SIZE];
+        //struct ofp_port *p;
+        //unsigned int port_no;
+        //size_t n_ports;
+        //size_t i;
 
         pw->got_feature_reply = true;
         if (pw->datapath_id != osf->datapath_id) {
@@ -271,7 +271,7 @@ port_watcher_local_packet_cb(struct relay *r, void *pw_)
             seen[ntohl(opp->port_no)] = true;
         }
 
-        /* Delete all the ports not included in the message.
+         Delete all the ports not included in the message.
         for (p = port_array_first(&pw->ports, &port_no); p;
              p = port_array_next(&pw->ports, &port_no)) {
             if (!seen[port_no]) {
@@ -281,7 +281,7 @@ port_watcher_local_packet_cb(struct relay *r, void *pw_)
 
         update_netdev_monitor_devices(pw);
 
-        call_local_port_changed_callbacks(pw);
+        call_local_port_changed_callbacks(pw);*/
     } else if (oh->type == OFPT_PORT_STATUS
                && msg->size >= sizeof(struct ofp_port_status)) {
         struct ofp_port_status *ops = msg->data;
@@ -293,7 +293,7 @@ port_watcher_local_packet_cb(struct relay *r, void *pw_)
             update_netdev_monitor_devices(pw);
         }
     }
-    return false;*/
+    return false;
 } 
 
 static void

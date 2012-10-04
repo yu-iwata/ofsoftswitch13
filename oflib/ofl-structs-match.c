@@ -211,7 +211,7 @@ ofl_structs_match_convert_pktf2oflm(struct hmap * hmap_packet_fields, struct ofl
 {
     struct packet_fields *iter;
     size_t len = 0;
-    HMAP_FOR_EACH(iter,struct packet_fields, hmap_node, hmap_packet_fields)
+    HMAP_FOR_EACH(iter, struct packet_fields, hmap_node, hmap_packet_fields)
     {
         if (OXM_VENDOR(iter->header) != 0x8000)
             continue;

@@ -113,7 +113,6 @@ int nbee_extract_proto_fields(struct ofpbuf * pktin, _nbPDMLField * field, struc
 */
 {
 /* Found a NetPDL field usable on matching */
-
     uint32_t type,vendor;
     uint8_t size;
     /* Preparing the internal structure */

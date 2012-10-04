@@ -751,9 +751,10 @@ ofl_msg_unpack_multipart_request_empty(struct ofp_multipart_request *os UNUSED, 
 
 static ofl_err
 ofl_msg_unpack_multipart_request_table_features(struct ofp_multipart_request *os, size_t *len, struct ofl_msg_header **msg, struct ofl_exp *exp){
-    struct ofp_table_features **sm;
     struct ofl_msg_multipart_request_table_features *dm;
-    ofl_err error;
+	int i;
+	ofl_err error;
+	uint8_t *features; 
     
     dm = (struct ofl_msg_multipart_request_table_features*) malloc(sizeof(struct ofl_msg_multipart_request_table_features));
     if (!(*len)){
@@ -763,11 +764,19 @@ ofl_msg_unpack_multipart_request_table_features(struct ofp_multipart_request *os
         return 0;
     }
     
-    //error = ofl_utils_count_ofp_table_features(void *data, size_t data_len, size_t *count)    
-    //*len -= sizeof() 
-    
-    
-    *msg = (struct ofl_msg_header*) dm;
+    error = ofl_utils_count_ofp_table_features((uint8_t*) os->body, *len, &dm->tables_num);
+    if (error) {
+        free(dm);
+        return error;
+    }
+    dm->table_features = (struct ofl_table_features **) malloc(sizeof(struct ofl_table_features) * dm->tables_num);
+    features = (uint8_t* ) os->body;
+
+    for(i = 0; i < dm->tables_num; i++){
+        error = ofl_structs_table_features_unpack((struct ofp_table_features*) features, len, &dm->table_features[i] , exp);
+        features += ntohs(((struct ofp_table_features*) features)->length); 
+    }   
+    *msg = (struct ofl_msg_header *)dm;
     return 0;
 }
 
@@ -1500,7 +1509,6 @@ ofl_msg_unpack(uint8_t *buf, size_t buf_len, struct ofl_msg_header **msg, uint32
     if (error) {
         if (OFL_LOG_IS_DBG_ENABLED(LOG_MODULE)) {
             char *str = ofl_hex_to_string(buf, buf_len < 1024 ? buf_len : 1024);
-
             OFL_LOG_DBG(LOG_MODULE, "Error happened after processing %zu bytes of packet.", ntohs(oh->length) - len);
             OFL_LOG_DBG(LOG_MODULE, "\n%s\n", str);
             free(str);

@@ -34,13 +34,13 @@
 
 
 // Include class definitions
-#include <nbee/nbee_initcleanup.h>
-#include <nbee/nbee_packetdecoder.h>
-#include <nbee/nbee_packetdumpfiles.h>
-#include <nbee/nbee_pxmlreader.h>
-#include <nbee/nbee_netpdlutils.h>
-#include <nbee/nbee_packetengine.h>
-#include <nbee/nbee_profiler.h>
+#include <nbee_initcleanup.h>
+#include <nbee_packetdecoder.h>
+#include <nbee_packetdumpfiles.h>
+#include <nbee_pxmlreader.h>
+#include <nbee_netpdlutils.h>
+#include <nbee_packetengine.h>
+#include <nbee_profiler.h>
 
 //[OM] temporarily removed the netvm API from netbee
 //#include <nbee_packetprocess.h>

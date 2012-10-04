@@ -330,10 +330,7 @@ ofl_structs_table_properties_unpack(struct ofp_table_feature_prop_header * src, 
 		    
 		    dp->oxm_num = (ntohs(sp->length) - sizeof(struct ofp_table_feature_prop_oxm))/sizeof(uint32_t);
             dp->oxm_ids = (uint32_t*) malloc(sizeof(uint32_t) * dp->oxm_num);
-            printf("start %d\n", OXM_OF_METADATA);
             for(i = 0; i < dp->oxm_num; i++ ){
-                if (ntohs(src->type) == OFPTFPT_WILDCARDS)
-                    printf("TYPE %d\n",  ntohl(sp->oxm_ids[i]));
                 dp->oxm_ids[i] = ntohl(sp->oxm_ids[i]);
             }
             plen -= ntohs(sp->length);  		    
